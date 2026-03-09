@@ -1,0 +1,5 @@
+rate:
+  starter:
+    mode: current-day
+    currencies[0]: EUR
+    currencies[1]: USD

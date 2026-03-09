@@ -1,0 +1,5 @@
+rate:
+  starter:
+    mode: date-range
+    currencies[0]: EUR
+    currencies[1]: USD
