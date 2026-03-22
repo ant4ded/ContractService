@@ -14,7 +14,7 @@ public class ContractServiceApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(ContractServiceApplication.class, args);
 		CurrencyRateService bean = context.getBean(CurrencyRateService.class);
-		CurrencyRateDto rate = bean.getRate("BYN", "USD", LocalDate.now());
+		CurrencyRateDto rate = bean.getRate("EUR", "USD", LocalDate.now());
 		System.out.println(rate);
 	}
 

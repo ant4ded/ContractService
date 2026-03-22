@@ -3,3 +3,4 @@ rate:
     mode: current-day
     currencies[0]: EUR
     currencies[1]: USD
+    enable-cross-rate: true
