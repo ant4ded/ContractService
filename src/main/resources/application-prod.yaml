@@ -12,3 +12,7 @@ management:
     web:
       exposure:
         include: currencyRates
+
+logging:
+  level:
+    my.idp.spring.currency.rate: info
