@@ -4,3 +4,12 @@ rate:
     currencies[0]: EUR
     currencies[1]: USD
     enable-cross-rate: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
