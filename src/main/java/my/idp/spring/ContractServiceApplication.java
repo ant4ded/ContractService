@@ -1,4 +1,4 @@
-package my.idp.spring.contract.service;
+package my.idp.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
