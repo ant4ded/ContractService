@@ -1,7 +1,8 @@
 package my.idp.spring.contract.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import my.idp.spring.contract.dto.ContractDto;
+import my.idp.spring.contract.dto.ContractRequestDto;
+import my.idp.spring.contract.dto.ContractResponseVo;
 import my.idp.spring.contract.dto.PageDto;
 import my.idp.spring.contract.service.ContractService;
 import org.springframework.data.domain.Page;
@@ -22,32 +23,32 @@ public class ContractController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ContractDto> create(@Valid @RequestBody ContractDto contractDTO) {
+	public ResponseEntity<ContractResponseVo> create(@Valid @RequestBody ContractRequestDto contractDTO) {
 		return ResponseEntity.ok(contractService.create(contractDTO));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ContractDto> getById(@PathVariable Long id) {
+	public ResponseEntity<ContractResponseVo> getById(@PathVariable Long id) {
 		return ResponseEntity.ok(contractService.getById(id));
 	}
 
 	@GetMapping
-	public ResponseEntity<Page<ContractDto>> getAll(@Valid @ModelAttribute PageDto pageDto) {
+	public ResponseEntity<Page<ContractResponseVo>> getAll(@Valid @ModelAttribute PageDto pageDto) {
 		return ResponseEntity.ok(contractService.getAll(pageDto));
 	}
 
 	@GetMapping("/frame")
-	public ResponseEntity<Page<ContractDto>> getAllFrames(@Valid @ModelAttribute PageDto pageDto) {
+	public ResponseEntity<Page<ContractResponseVo>> getAllFrames(@Valid @ModelAttribute PageDto pageDto) {
 		return ResponseEntity.ok(contractService.getAllFrames(pageDto));
 	}
 
 	@GetMapping("/daily-report")
-	public ResponseEntity<List<ContractDto>> getDailyReport() {
+	public ResponseEntity<List<ContractResponseVo>> getDailyReport() {
 		return ResponseEntity.ok(contractService.getDailyReport());
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ContractDto> update(@PathVariable Long id, @Valid @RequestBody ContractDto contractDTO) {
+	public ResponseEntity<ContractResponseVo> update(@PathVariable Long id, @Valid @RequestBody ContractRequestDto contractDTO) {
 		return ResponseEntity.ok(contractService.update(id, contractDTO));
 	}
 

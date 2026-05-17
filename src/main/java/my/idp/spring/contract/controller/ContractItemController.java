@@ -1,7 +1,8 @@
 package my.idp.spring.contract.controller;
 
 import my.idp.spring.contract.service.ContractItemService;
-import my.idp.spring.contract.dto.ContractItemDto;
+import my.idp.spring.contract.dto.ContractItemRequestDto;
+import my.idp.spring.contract.dto.ContractItemResponseVo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +18,17 @@ public class ContractItemController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ContractItemDto> create(@Valid @RequestBody ContractItemDto contractItemDto) {
+	public ResponseEntity<ContractItemResponseVo> create(@Valid @RequestBody ContractItemRequestDto contractItemDto) {
 		return ResponseEntity.ok(contractItemService.create(contractItemDto));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ContractItemDto> getById(@PathVariable Integer id) {
+	public ResponseEntity<ContractItemResponseVo> getById(@PathVariable Integer id) {
 		return ResponseEntity.ok(contractItemService.getById(id));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ContractItemDto> update(@PathVariable Integer id, @Valid @RequestBody ContractItemDto contractItemDto) {
+	public ResponseEntity<ContractItemResponseVo> update(@PathVariable Integer id, @Valid @RequestBody ContractItemRequestDto contractItemDto) {
 		return ResponseEntity.ok(contractItemService.update(id, contractItemDto));
 	}
 

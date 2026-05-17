@@ -1,13 +1,13 @@
 package my.idp.spring.contract.validation;
 
-import my.idp.spring.contract.dto.ContractDto;
+import my.idp.spring.contract.dto.ContractRequestDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class FrameContractValidator implements ConstraintValidator<ValidContract, ContractDto> {
+public class FrameContractValidator implements ConstraintValidator<ValidContract, ContractRequestDto> {
     @Override
-    public boolean isValid(ContractDto contractDTO, ConstraintValidatorContext context) {
+    public boolean isValid(ContractRequestDto contractDTO, ConstraintValidatorContext context) {
         boolean isFrame = contractDTO.isFrame();
         boolean hasItems = !contractDTO.getItems().isEmpty();
 

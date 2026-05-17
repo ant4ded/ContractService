@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContractItemDto {
+public class ContractItemRequestDto {
     Integer id;
     Long docId;
     @NotNull

@@ -1,7 +1,8 @@
 package my.idp.spring.contract.service;
 
 import lombok.AllArgsConstructor;
-import my.idp.spring.contract.dto.ContractDto;
+import my.idp.spring.contract.dto.ContractRequestDto;
+import my.idp.spring.contract.dto.ContractResponseVo;
 import my.idp.spring.contract.dto.PageDto;
 import my.idp.spring.contract.entity.Contract;
 import my.idp.spring.contract.mapper.ContractMapper;
@@ -21,49 +22,49 @@ public class ContractService {
 	private final ContractRepository repository;
 	private final ContractMapper mapper;
 
-	public ContractDto create(ContractDto contractDTO) {
+	public ContractResponseVo create(ContractRequestDto contractDTO) {
 		Contract contract = mapper.mapToEntity(contractDTO);
 		contract = repository.save(contract);
-		return mapper.mapToDto(contract);
+		return mapper.mapToVo(contract);
 	}
 
-	public ContractDto getById(Long id) {
+	public ContractResponseVo getById(Long id) {
 		Contract contract = repository.findById(id).orElse(null);
-		return mapper.mapToDto(contract);
+		return mapper.mapToVo(contract);
 	}
 
-	public Page<ContractDto> getAll(PageDto pageDto) {
+	public Page<ContractResponseVo> getAll(PageDto pageDto) {
 		Pageable pageable;
 		if (pageDto.getSort() == null) {
 			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
 		} else {
 			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize(), Sort.by(pageDto.getSort().getDirection(), pageDto.getSort().getField()));
 		}
-		return repository.findAll(pageable).map(mapper::mapToDto);
+		return repository.findAll(pageable).map(mapper::mapToVo);
 	}
 
-	public Page<ContractDto> getAllFrames(PageDto pageDto) {
+	public Page<ContractResponseVo> getAllFrames(PageDto pageDto) {
 		Pageable pageable;
 		if (pageDto.getSort() == null) {
 			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
 		} else {
 			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize(), Sort.by(pageDto.getSort().getDirection(), pageDto.getSort().getField()));
 		}
-		return repository.findAllByFrameIs(true, pageable).map(mapper::mapToDto);
+		return repository.findAllByFrameIs(true, pageable).map(mapper::mapToVo);
 	}
 
-	public List<ContractDto> getDailyReport() {
-		return repository.getDailyReport().stream().map(mapper::mapToDto).collect(Collectors.toList());
+	public List<ContractResponseVo> getDailyReport() {
+		return repository.getDailyReport().stream().map(mapper::mapToVo).collect(Collectors.toList());
 	}
 
-	public ContractDto update(Long id, ContractDto contractDTO) {
+	public ContractResponseVo update(Long id, ContractRequestDto contractDTO) {
 		Contract contract = repository.findById(id).orElse(null);
 		if (contract != null) {
 			Contract updated = mapper.mapToEntity(contractDTO);
 			updated.setId(id);
 			contract = repository.save(updated);
 		}
-		return mapper.mapToDto(contract);
+		return mapper.mapToVo(contract);
 	}
 
 	public void delete(Long id) {

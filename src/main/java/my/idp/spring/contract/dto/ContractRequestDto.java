@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContractDto {
+public class ContractRequestDto {
     Long id;
     @NotBlank
     @NotNull
@@ -31,5 +31,5 @@ public class ContractDto {
     String paymentCurrency;
     boolean frame;
     @Valid
-    List<ContractItemDto> items;
+    List<ContractItemRequestDto> items;
 }

@@ -1,7 +1,7 @@
 package my.idp.spring.contract.mapper;
 
-public interface EntityVoMapper<E, V> {
-	V mapToDto(E entity);
+public interface EntityVoMapper<E, D, V> {
+	E mapToEntity(D dto);
 
-	E mapToEntity(V vo);
+	V mapToVo(E entity);
 }
