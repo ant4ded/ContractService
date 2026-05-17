@@ -1,6 +1,7 @@
 package my.idp.spring.contract.mapper;
 
 import my.idp.spring.contract.entity.ContractItem;
+import my.idp.spring.contract.entity.CurrencyType;
 import my.idp.spring.contract.dto.ContractItemDto;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class ContractItemMapper implements EntityVoMapper<ContractItem, Contract
 				.quantity(vo.getQuantity())
 				.pricePerUnit(vo.getPricePerUnit())
 				.units(vo.getUnits())
+				.currencyType(CurrencyType.valueOf(vo.getCurrencyType()))
 				.build();
 	}
 
@@ -25,6 +27,7 @@ public class ContractItemMapper implements EntityVoMapper<ContractItem, Contract
 				entity.getGoodName(),
 				entity.getQuantity(),
 				entity.getPricePerUnit(),
-				entity.getUnits());
+				entity.getUnits(),
+				entity.getCurrencyType().name());
 	}
 }

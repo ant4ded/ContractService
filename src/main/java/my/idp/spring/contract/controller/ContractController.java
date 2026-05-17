@@ -35,6 +35,11 @@ public class ContractController {
 		return ResponseEntity.ok(contractService.getAll(pageDto));
 	}
 
+	@GetMapping("/frame")
+	public ResponseEntity<Page<ContractDto>> getAllFrames(@Valid @ModelAttribute PageDto pageDto) {
+		return ResponseEntity.ok(contractService.getAllFrames(pageDto));
+	}
+
 	@PutMapping("/{id}")
 	public ResponseEntity<ContractDto> update(@PathVariable Long id, @Valid @RequestBody ContractDto contractDTO) {
 		return ResponseEntity.ok(contractService.update(id, contractDTO));

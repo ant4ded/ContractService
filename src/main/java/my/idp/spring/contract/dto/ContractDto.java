@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import my.idp.spring.contract.validation.ValidContract;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -29,5 +30,6 @@ public class ContractDto {
     @NotNull
     String paymentCurrency;
     boolean frame;
+    @Valid
     List<ContractItemDto> items;
 }

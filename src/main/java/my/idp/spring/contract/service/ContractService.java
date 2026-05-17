@@ -39,6 +39,16 @@ public class ContractService {
 		return repository.findAll(pageable).map(mapper::mapToDto);
 	}
 
+	public Page<ContractDto> getAllFrames(PageDto pageDto) {
+		Pageable pageable;
+		if (pageDto.getSort() == null) {
+			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
+		} else {
+			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize(), Sort.by(pageDto.getSort().getDirection(), pageDto.getSort().getField()));
+		}
+		return repository.findAllByFrameIs(true, pageable).map(mapper::mapToDto);
+	}
+
 	public ContractDto update(Long id, ContractDto contractDTO) {
 		Contract contract = repository.findById(id).orElse(null);
 		if (contract != null) {

@@ -27,6 +27,10 @@ public class ContractItem {
     @Column(name = "units")
     private String units;
 
+    @Column(name = "currency_type")
+    @Enumerated(EnumType.STRING)
+    private CurrencyType currencyType;
+
     @ManyToOne
     @JoinColumn(name = "contract_id")
     private Contract contract;
