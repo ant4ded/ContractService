@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class ContractMapper implements EntityVoMapper<Contract, ContractRequestDto, ContractResponseVo> {
+public class ContractMapper implements EntityMapper<Contract, ContractRequestDto, ContractResponseVo> {
 	private final ContractItemMapper contractItemMapper;
 
 	@Override

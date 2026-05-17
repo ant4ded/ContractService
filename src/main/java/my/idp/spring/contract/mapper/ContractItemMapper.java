@@ -8,7 +8,7 @@ import my.idp.spring.contract.dto.ContractItemResponseVo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ContractItemMapper implements EntityVoMapper<ContractItem, ContractItemRequestDto, ContractItemResponseVo> {
+public class ContractItemMapper implements EntityMapper<ContractItem, ContractItemRequestDto, ContractItemResponseVo> {
 	@Override
 	public ContractItem mapToEntity(ContractItemRequestDto vo) {
 		ContractItemId id = new ContractItemId(vo.getId(), vo.getDocId());
