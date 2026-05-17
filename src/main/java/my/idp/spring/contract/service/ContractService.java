@@ -1,6 +1,7 @@
 package my.idp.spring.contract.service;
 
 import lombok.AllArgsConstructor;
+import my.idp.spring.contract.dto.ContractItemRequestDto;
 import my.idp.spring.contract.dto.ContractRequestDto;
 import my.idp.spring.contract.dto.ContractResponseVo;
 import my.idp.spring.contract.dto.PageDto;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,11 +23,24 @@ import java.util.stream.Collectors;
 public class ContractService {
 	private final ContractRepository repository;
 	private final ContractMapper mapper;
+	private final ContractItemService contractItemService;
 
-	public ContractResponseVo create(ContractRequestDto contractDTO) {
+    @Transactional
+    public ContractResponseVo create(ContractRequestDto contractDTO) {
 		Contract contract = mapper.mapToEntity(contractDTO);
 		contract = repository.save(contract);
-		return mapper.mapToVo(contract);
+
+		ContractResponseVo contractResponseVo = mapper.mapToVo(contract);
+		contractResponseVo.getItems().clear();
+
+		int itemId = 1;
+		for (ContractItemRequestDto itemDto : contractDTO.getItems()) {
+			itemDto.setId(itemId++);
+			itemDto.setDocId(contract.getId());
+			contractResponseVo.getItems().add(contractItemService.create(itemDto));
+		}
+
+		return contractResponseVo;
 	}
 
 	public ContractResponseVo getById(Long id) {

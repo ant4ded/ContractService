@@ -22,19 +22,19 @@ public class ContractItemController {
 		return ResponseEntity.ok(contractItemService.create(contractItemDto));
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ContractItemResponseVo> getById(@PathVariable Integer id) {
-		return ResponseEntity.ok(contractItemService.getById(id));
+	@GetMapping("/{id}/{docId}")
+	public ResponseEntity<ContractItemResponseVo> getById(@PathVariable Integer id, @PathVariable Long docId) {
+		return ResponseEntity.ok(contractItemService.getById(id, docId));
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ContractItemResponseVo> update(@PathVariable Integer id, @Valid @RequestBody ContractItemRequestDto contractItemDto) {
-		return ResponseEntity.ok(contractItemService.update(id, contractItemDto));
+	@PutMapping("/{id}/{docId}")
+	public ResponseEntity<ContractItemResponseVo> update(@PathVariable Integer id, @PathVariable Long docId, @Valid @RequestBody ContractItemRequestDto contractItemDto) {
+		return ResponseEntity.ok(contractItemService.update(id, docId, contractItemDto));
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		contractItemService.delete(id);
+	@DeleteMapping("/{id}/{docId}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Long docId) {
+		contractItemService.delete(id, docId);
 		return ResponseEntity.noContent().build();
 	}
 }

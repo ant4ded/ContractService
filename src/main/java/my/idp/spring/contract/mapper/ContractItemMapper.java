@@ -1,6 +1,7 @@
 package my.idp.spring.contract.mapper;
 
 import my.idp.spring.contract.entity.ContractItem;
+import my.idp.spring.contract.entity.ContractItemId;
 import my.idp.spring.contract.entity.CurrencyType;
 import my.idp.spring.contract.dto.ContractItemRequestDto;
 import my.idp.spring.contract.dto.ContractItemResponseVo;
@@ -10,9 +11,9 @@ import org.springframework.stereotype.Service;
 public class ContractItemMapper implements EntityVoMapper<ContractItem, ContractItemRequestDto, ContractItemResponseVo> {
 	@Override
 	public ContractItem mapToEntity(ContractItemRequestDto vo) {
+		ContractItemId id = new ContractItemId(vo.getId(), vo.getDocId());
 		return ContractItem.builder()
-				.id(vo.getId())
-				.docId(vo.getDocId())
+				.id(id)
 				.goodName(vo.getGoodName())
 				.quantity(vo.getQuantity())
 				.pricePerUnit(vo.getPricePerUnit())
@@ -23,8 +24,8 @@ public class ContractItemMapper implements EntityVoMapper<ContractItem, Contract
 
 	@Override
 	public ContractItemResponseVo mapToVo(ContractItem entity) {
-		return new ContractItemResponseVo(entity.getId(),
-				entity.getDocId(),
+		return new ContractItemResponseVo(entity.getId().getId(),
+				entity.getId().getDocId(),
 				entity.getGoodName(),
 				entity.getQuantity(),
 				entity.getPricePerUnit(),

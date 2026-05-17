@@ -13,11 +13,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "contract_item")
 public class ContractItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "doc_id")
-    private Long docId;
+    @EmbeddedId
+    private ContractItemId id;
     @Column(name = "good_name")
     private String goodName;
     @Column(name = "quantity")
@@ -32,6 +29,6 @@ public class ContractItem {
     private CurrencyType currencyType;
 
     @ManyToOne
-    @JoinColumn(name = "contract_id")
+    @JoinColumn(name = "doc_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Contract contract;
 }
