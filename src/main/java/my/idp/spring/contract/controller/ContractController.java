@@ -1,13 +1,14 @@
 package my.idp.spring.contract.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import my.idp.spring.contract.service.ContractService;
 import my.idp.spring.contract.dto.ContractDto;
+import my.idp.spring.contract.dto.PageDto;
+import my.idp.spring.contract.service.ContractService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -30,8 +31,8 @@ public class ContractController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ContractDto>> getAll() {
-		return ResponseEntity.ok(contractService.getAll());
+	public ResponseEntity<Page<ContractDto>> getAll(@Valid @ModelAttribute PageDto pageDto) {
+		return ResponseEntity.ok(contractService.getAll(pageDto));
 	}
 
 	@PutMapping("/{id}")
