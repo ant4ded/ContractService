@@ -7,6 +7,7 @@ import my.idp.spring.contract.entity.CurrencyType;
 import my.idp.spring.contract.validation.PossibleValues;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -17,9 +18,15 @@ import java.math.BigDecimal;
 public class ContractItemDto {
     Integer id;
     Long docId;
+    @NotNull
     String goodName;
+    @Min(1)
+    @NotNull
     Integer quantity;
+    @Min(1)
+    @NotNull
     BigDecimal pricePerUnit;
+    @NotNull
     String units;
     @NotNull
     @PossibleValues(CurrencyType.class)
