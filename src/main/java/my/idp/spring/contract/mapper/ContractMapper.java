@@ -15,15 +15,15 @@ public class ContractMapper implements EntityMapper<Contract, ContractRequestDto
 	private final ContractItemMapper contractItemMapper;
 
 	@Override
-	public ContractResponseVo mapToVo(Contract entity) {
+	public ContractResponseVo mapToDto(Contract entity) {
 		return new ContractResponseVo(entity.getId(),
 				entity.getTitle(),
-				entity.getRegistrationDate().toString(),
+				entity.getRegistrationDate(),
 				entity.getRegistrationNumber(),
 				entity.getContractCurrency(),
 				entity.getPaymentCurrency(),
 				entity.isFrame(),
-				entity.getItems().stream().map(contractItemMapper::mapToVo)
+				entity.getItems().stream().map(contractItemMapper::mapToDto)
 						.collect(Collectors.toList()));
 	}
 

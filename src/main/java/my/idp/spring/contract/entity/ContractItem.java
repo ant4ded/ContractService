@@ -28,7 +28,7 @@ public class ContractItem {
     @Enumerated(EnumType.STRING)
     private CurrencyType currencyType;
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "doc_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Contract contract;
 }

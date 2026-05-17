@@ -1,11 +1,9 @@
 package my.idp.spring.contract.service;
 
 import lombok.AllArgsConstructor;
-import my.idp.spring.contract.dto.ContractItemRequestDto;
-import my.idp.spring.contract.dto.ContractRequestDto;
-import my.idp.spring.contract.dto.ContractResponseVo;
-import my.idp.spring.contract.dto.PageDto;
+import my.idp.spring.contract.dto.*;
 import my.idp.spring.contract.entity.Contract;
+import my.idp.spring.contract.exception.EntityNotFoundException;
 import my.idp.spring.contract.mapper.ContractMapper;
 import my.idp.spring.contract.repository.ContractRepository;
 import org.springframework.data.domain.Page;
@@ -25,27 +23,33 @@ public class ContractService {
 	private final ContractMapper mapper;
 	private final ContractItemService contractItemService;
 
-    @Transactional
-    public ContractResponseVo create(ContractRequestDto contractDTO) {
+	@Transactional
+	public ContractResponseVo create(ContractRequestDto contractDTO) {
 		Contract contract = mapper.mapToEntity(contractDTO);
 		contract = repository.save(contract);
 
-		ContractResponseVo contractResponseVo = mapper.mapToVo(contract);
+		ContractResponseVo contractResponseVo = mapper.mapToDto(contract);
 		contractResponseVo.getItems().clear();
 
 		int itemId = 1;
 		for (ContractItemRequestDto itemDto : contractDTO.getItems()) {
 			itemDto.setId(itemId++);
 			itemDto.setDocId(contract.getId());
-			contractResponseVo.getItems().add(contractItemService.create(itemDto));
+			ContractItemResponseDto itemResponseDto = contractItemService.create(itemDto);
+			itemResponseDto = contractItemService.calculateContractItemPrices(itemResponseDto, contractResponseVo, itemDto.getPricePerUnit());
+			contractResponseVo.getItems().add(itemResponseDto);
 		}
 
 		return contractResponseVo;
 	}
 
 	public ContractResponseVo getById(Long id) {
-		Contract contract = repository.findById(id).orElse(null);
-		return mapper.mapToVo(contract);
+		Contract contract = repository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("%s with id %s not found.", Contract.class.getSimpleName(), id)));
+		ContractResponseVo contractResponseVo = mapper.mapToDto(contract);
+		for (ContractItemResponseDto itemVo : contractResponseVo.getItems()) {
+			contractItemService.calculateContractItemPrices(itemVo, contractResponseVo, itemVo.getPricePerUnit());
+		}
+		return contractResponseVo;
 	}
 
 	public Page<ContractResponseVo> getAll(PageDto pageDto) {
@@ -55,7 +59,13 @@ public class ContractService {
 		} else {
 			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize(), Sort.by(pageDto.getSort().getDirection(), pageDto.getSort().getField()));
 		}
-		return repository.findAll(pageable).map(mapper::mapToVo);
+		return repository.findAll(pageable).map(contract -> {
+			ContractResponseVo contractResponseVo = mapper.mapToDto(contract);
+			for (ContractItemResponseDto itemVo : contractResponseVo.getItems()) {
+				contractItemService.calculateContractItemPrices(itemVo, contractResponseVo, itemVo.getPricePerUnit());
+			}
+			return contractResponseVo;
+		});
 	}
 
 	public Page<ContractResponseVo> getAllFrames(PageDto pageDto) {
@@ -65,21 +75,35 @@ public class ContractService {
 		} else {
 			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize(), Sort.by(pageDto.getSort().getDirection(), pageDto.getSort().getField()));
 		}
-		return repository.findAllByFrameIs(true, pageable).map(mapper::mapToVo);
+		return repository.findAllByFrameIs(true, pageable).map(contract -> {
+			ContractResponseVo contractResponseVo = mapper.mapToDto(contract);
+			for (ContractItemResponseDto itemVo : contractResponseVo.getItems()) {
+				contractItemService.calculateContractItemPrices(itemVo, contractResponseVo, itemVo.getPricePerUnit());
+			}
+			return contractResponseVo;
+		});
 	}
 
 	public List<ContractResponseVo> getDailyReport() {
-		return repository.getDailyReport().stream().map(mapper::mapToVo).collect(Collectors.toList());
+		return repository.getDailyReport().stream().map(contract -> {
+			ContractResponseVo contractResponseVo = mapper.mapToDto(contract);
+			for (ContractItemResponseDto itemVo : contractResponseVo.getItems()) {
+				contractItemService.calculateContractItemPrices(itemVo, contractResponseVo, itemVo.getPricePerUnit());
+			}
+			return contractResponseVo;
+		}).collect(Collectors.toList());
 	}
 
+	@Transactional
 	public ContractResponseVo update(Long id, ContractRequestDto contractDTO) {
-		Contract contract = repository.findById(id).orElse(null);
-		if (contract != null) {
-			Contract updated = mapper.mapToEntity(contractDTO);
-			updated.setId(id);
-			contract = repository.save(updated);
+		Contract updated = mapper.mapToEntity(contractDTO);
+		updated.setId(id);
+		Contract saved = repository.save(updated);
+		ContractResponseVo contractResponseVo = mapper.mapToDto(saved);
+		for (ContractItemResponseDto itemVo : contractResponseVo.getItems()) {
+			contractItemService.calculateContractItemPrices(itemVo, contractResponseVo, itemVo.getPricePerUnit());
 		}
-		return mapper.mapToVo(contract);
+		return contractResponseVo;
 	}
 
 	public void delete(Long id) {

@@ -32,7 +32,7 @@ public class Contract {
     @Column(name = "frame")
     private boolean frame;
 
-    @OneToMany(mappedBy = "contract")
+    @OneToMany(mappedBy = "contract", fetch = FetchType.EAGER)
     private List<ContractItem> items;
 
     @PrePersist
