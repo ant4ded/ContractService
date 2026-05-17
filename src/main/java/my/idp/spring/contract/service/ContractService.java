@@ -12,6 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @AllArgsConstructor
 @Service
 public class ContractService {
@@ -47,6 +50,10 @@ public class ContractService {
 			pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize(), Sort.by(pageDto.getSort().getDirection(), pageDto.getSort().getField()));
 		}
 		return repository.findAllByFrameIs(true, pageable).map(mapper::mapToDto);
+	}
+
+	public List<ContractDto> getDailyReport() {
+		return repository.getDailyReport().stream().map(mapper::mapToDto).collect(Collectors.toList());
 	}
 
 	public ContractDto update(Long id, ContractDto contractDTO) {

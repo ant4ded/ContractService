@@ -21,7 +21,7 @@ public class Contract {
     private String title;
     @Column(name = "create_date")
     private Date createDate;
-    @Column(name = "registration_date")
+    @Column(name = "registration_date", columnDefinition = "DATE")
     private Date registrationDate;
     @Column(name = "registration_number")
     private String registrationNumber;

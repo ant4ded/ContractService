@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -38,6 +39,11 @@ public class ContractController {
 	@GetMapping("/frame")
 	public ResponseEntity<Page<ContractDto>> getAllFrames(@Valid @ModelAttribute PageDto pageDto) {
 		return ResponseEntity.ok(contractService.getAllFrames(pageDto));
+	}
+
+	@GetMapping("/daily-report")
+	public ResponseEntity<List<ContractDto>> getDailyReport() {
+		return ResponseEntity.ok(contractService.getDailyReport());
 	}
 
 	@PutMapping("/{id}")
