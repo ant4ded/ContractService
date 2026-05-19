@@ -53,5 +53,13 @@ databaseChangeLog:
             referencedTableName: contract
             referencedColumnNames: id
             deleteCascade: true
+
+  - changeSet:
+      id: alter-contract-item-003
+      author: adzedzik
+      changes:
         - sql:
             sql: "ALTER TABLE idp.contract_item ADD CONSTRAINT contract_item_currency_type_check CHECK (currency_type in ('CONTRACT', 'PAYMENT'))"
+      rollback:
+        - sql:
+            sql: "ALTER TABLE idp.contract_item DROP CONSTRAINT contract_item_currency_type_check"
