@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-contract-item-002
+      author: adzedzik
+      changes:
+        - createTable:
+            tableName: contract_item
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doc_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: good_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price_per_unit
+                  type: DECIMAL(19,4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: units
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency_type
+                  type: VARCHAR(8)
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            tableName: contract_item
+            columnNames: id, doc_id
+            constraintName: contract_item_pk
+        - addForeignKeyConstraint:
+            constraintName: contract_item_contract_fk
+            baseTableName: contract_item
+            baseColumnNames: doc_id
+            referencedTableName: contract
+            referencedColumnNames: id
+            deleteCascade: true
+        - sql:
+            sql: "ALTER TABLE idp.contract_item ADD CONSTRAINT contract_item_currency_type_check CHECK (currency_type in ('CONTRACT', 'PAYMENT'))"

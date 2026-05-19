@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-contract-001
+      author: adzedzik
+      changes:
+        - createTable:
+            tableName: contract
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_date
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: registration_date
+                  type: DATE
+              - column:
+                  name: registration_number
+                  type: VARCHAR(255)
+              - column:
+                  name: contract_currency
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_currency
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: frame
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            tableName: contract
+            columnNames: id
+            constraintName: contract_pk

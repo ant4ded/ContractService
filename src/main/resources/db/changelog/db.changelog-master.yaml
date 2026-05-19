@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/contract/create-contract-001.yaml
+  - include:
+      file: db/changelog/changeset/contract/create-contract-item-002.yaml

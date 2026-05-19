@@ -4,8 +4,13 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
         default_schema: idp
+
+  liquibase:
+    enabled: true
+    default-schema: idp
+    liquibase-schema: liquibase
