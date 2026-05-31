@@ -106,6 +106,7 @@ public class ContractService {
 		return contractResponseVo;
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}

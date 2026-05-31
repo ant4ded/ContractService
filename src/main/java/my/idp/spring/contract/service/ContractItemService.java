@@ -43,6 +43,7 @@ public class ContractItemService {
 		return mapper.mapToDto(contractItem);
 	}
 
+	@Transactional
 	public ContractItemResponseDto update(Integer itemId, Long docId, ContractItemRequestDto contractItemDto) {
 		ContractItemId id = new ContractItemId(itemId, docId);
 		ContractItem updated = mapper.mapToEntity(contractItemDto);
@@ -51,6 +52,7 @@ public class ContractItemService {
 		return mapper.mapToDto(updated);
 	}
 
+	@Transactional
 	public void delete(Integer itemId, Long docId) {
 		ContractItemId id = new ContractItemId(itemId, docId);
 		repository.deleteById(id);

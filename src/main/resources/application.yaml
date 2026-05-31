@@ -14,3 +14,8 @@ spring:
     enabled: true
     default-schema: idp
     liquibase-schema: liquibase
+
+  security:
+    jwt:
+      secret: myidpsecretkey1234567890abcdef
+      expiration: 3600000
