@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,6 +85,7 @@ public class ContractService {
 		});
 	}
 
+	@PostFilter("hasRole('ADMIN') or !filterObject.secretData")
 	public List<ContractResponseVo> getDailyReport() {
 		return repository.getDailyReport().stream().map(contract -> {
 			ContractResponseVo contractResponseVo = mapper.mapToDto(contract);

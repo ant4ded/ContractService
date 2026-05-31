@@ -16,5 +16,6 @@ public class ContractResponseVo {
     String contractCurrency;
     String paymentCurrency;
     boolean frame;
+    boolean secretData;
     List<ContractItemResponseDto> items;
 }

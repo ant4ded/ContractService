@@ -23,6 +23,7 @@ public class ContractMapper implements EntityMapper<Contract, ContractRequestDto
 				entity.getContractCurrency(),
 				entity.getPaymentCurrency(),
 				entity.isFrame(),
+				entity.isSecretData(),
 				entity.getItems().stream().map(contractItemMapper::mapToDto)
 						.collect(Collectors.toList()));
 	}
@@ -35,6 +36,7 @@ public class ContractMapper implements EntityMapper<Contract, ContractRequestDto
 				.contractCurrency(vo.getContractCurrency())
 				.paymentCurrency(vo.getPaymentCurrency())
 				.frame(vo.isFrame())
+				.secretData(vo.isSecretData())
 				.items(vo.getItems().stream().map(contractItemMapper::mapToEntity).collect(Collectors.toList()))
 				.build();
 	}

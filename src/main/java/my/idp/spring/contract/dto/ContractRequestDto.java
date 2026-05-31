@@ -30,6 +30,7 @@ public class ContractRequestDto {
     @NotNull
     String paymentCurrency;
     boolean frame;
+    boolean secretData;
     @Valid
     List<ContractItemRequestDto> items;
 }

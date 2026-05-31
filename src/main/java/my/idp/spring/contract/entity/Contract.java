@@ -31,6 +31,8 @@ public class Contract {
     private String paymentCurrency;
     @Column(name = "frame")
     private boolean frame;
+    @Column(name = "secret_data")
+    private boolean secretData;
 
     @OneToMany(mappedBy = "contract", fetch = FetchType.EAGER)
     private List<ContractItem> items;

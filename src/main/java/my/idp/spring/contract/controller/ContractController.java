@@ -47,7 +47,7 @@ public class ContractController {
 		return ResponseEntity.ok(contractService.getAllFrames(pageDto));
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@GetMapping("/daily-report")
 	public ResponseEntity<List<ContractResponseVo>> getDailyReport() {
 		return ResponseEntity.ok(contractService.getDailyReport());
