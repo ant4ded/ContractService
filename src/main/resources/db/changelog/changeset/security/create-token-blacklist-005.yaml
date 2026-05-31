@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-token-blacklist-005
+      author: adzedzik
+      changes:
+        - createTable:
+            tableName: token_black_list
+            columns:
+              - column:
+                  name: token
+                  type: VARCHAR(512)
+                  constraints:
+                    nullable: false
+                    unique: true

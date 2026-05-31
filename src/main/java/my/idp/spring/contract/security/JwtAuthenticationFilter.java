@@ -1,5 +1,6 @@
 package my.idp.spring.contract.security;
 
+import my.idp.spring.contract.repository.TokenBlackListRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -14,9 +15,11 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
+    private final TokenBlackListRepository tokenBlackListRepository;
 
-    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider, TokenBlackListRepository tokenBlackListRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.tokenBlackListRepository = tokenBlackListRepository;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
 
-            if (jwtTokenProvider.validateToken(token)) {
+            if (jwtTokenProvider.validateToken(token) && !tokenBlackListRepository.existsByToken(token)) {
                 Authentication authentication = jwtTokenProvider.createAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

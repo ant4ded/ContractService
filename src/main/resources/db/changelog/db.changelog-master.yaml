@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/changeset/security/create-user-003.yaml
   - include:
       file: db/changelog/changeset/secret-data/secret-data-004.yaml
+  - include:
+      file: db/changelog/changeset/security/create-token-blacklist-005.yaml
